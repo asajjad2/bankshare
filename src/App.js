@@ -22,7 +22,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/create" element={<CreateQRCode />} />
           <Route path="/edit/:id" element={<EditQRCode />} /> 
-          <Route path="/qr-ready:id" element={<QRCodeReady />} />
+          <Route path="/qr-ready/:id" element={<QRCodeReady />} />
           <Route path="/qr/:id" element={<QRCodeDisplay />} /> 
         </Routes>
     </div>

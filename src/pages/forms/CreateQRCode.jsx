@@ -1,6 +1,6 @@
 import React from 'react'
 import Input from '../../components/Input'
-
+import { Link } from 'react-router-dom'
 export default function CreateQRCode() {
   return (
     <div className='py-6 px-4 space-y-6'>
@@ -49,7 +49,9 @@ export default function CreateQRCode() {
 
         </div>
 
-        <button className='w-full bg-blue-800 text-white rounded-md shadow-sm py-3 px-4 font-medium'>Create QR Code</button>
+        <button className='w-full bg-blue-800 text-white rounded-md shadow-sm py-3 px-4 font-medium'>
+            <Link to={'/qr-ready/1'}>Create QR Code</Link>
+        </button>
     </div>
   )
 }
