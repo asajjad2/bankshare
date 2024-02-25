@@ -51,7 +51,6 @@ const data = [
 export default function Home() {
   return (
     <div className='w-full'>
-        <div className='py-5 px-3 uppercase bg-blue-800 text-white text-center text-lg font-extrabold'>bankshare</div>
         <div className='px-4 py-8 space-y-10'>
             <div className='space-y-4'>
                 <h1 className='text-3xl text-blue-800 font-extrabold'>Donate to Our Cause Today</h1>
