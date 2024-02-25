@@ -10,10 +10,11 @@ import EditQRCode from './pages/forms/EditQRCode';
 import QRCodeReady from './pages/QR/QRCodeReady';
 import QRCodeDisplay from './pages/QR/QRCodeDisplay';
 
+import { Link } from 'react-router-dom';
 function App() {
   return (
     <div className="App overflow-hidden font-raleway flex flex-col min-h-screen">
-        <div className='py-5 px-3 uppercase bg-blue-800 text-white text-center text-lg font-extrabold'>bankshare</div>
+        <Link to={'/'} className='py-5 px-3 uppercase bg-blue-800 text-white text-center text-lg font-extrabold'>bankshare</Link>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
