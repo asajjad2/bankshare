@@ -1,12 +1,12 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom'
 import Input from '../../components/Input'
 
 import { insertQRCode } from '../../supabaseFunctions';
-
-import { Link } from 'react-router-dom'
+import { useAuth } from '../../context/authContext';
 
 const initialQRData = {
-    p_user_id: '3c0ec62f-1a06-4067-b620-73fccf5841cb', 
+    p_user_id: '', 
     p_title: "",
     p_bank_name: "",
     p_account_title: "",
@@ -20,6 +20,9 @@ const initialQRData = {
 
 export default function CreateQRCode() {
 
+    const { user } = useAuth();
+
+    initialQRData.p_user_id = user.id;
     const [qrCodeData, setQrCodeData] = useState(initialQRData);
 
     const handleInputChange = (e) => {
