@@ -35,3 +35,20 @@ export const fetchQRCodeDetails = async (qrCodeId) => {
   }
 }
 
+export const fetchActiveQRCodesByUser = async (userId) => {
+  try {
+    const { data, error } = await supabase
+      .rpc('get_active_qr_codes_by_user', { user_id: userId });
+
+    if (error) {
+      console.error('Error fetching active QR codes:', error);
+      return null;
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Unexpected error:', error);
+    return null;
+  }
+}
+

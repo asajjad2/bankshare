@@ -1,5 +1,9 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+
+import { fetchActiveQRCodesByUser } from '../../supabaseFunctions'
+import { formatSupabaseDate } from '../../utils'
+import { useAuth } from '../../context/authContext'
 
 const CreatedInfoCard = ({name, date, active}) => (
     <Link className='px-4 py-5 flex justify-between items-center border-b border-b-gray-500' to={'/edit/1'}>
@@ -15,6 +19,21 @@ const CreatedInfoCard = ({name, date, active}) => (
 )
 
 export default function Home() {
+
+    const { user } = useAuth()
+    const [qrCodes, setQrCodes] = useState([])
+
+    useEffect(() => {
+        const loadQRCodes = async () => {
+            const codes = await fetchActiveQRCodesByUser(user.id)
+            console.log(codes)
+            setQrCodes(codes)
+        }
+
+        loadQRCodes()
+    }, [])
+
+
   return (
     <div className='w-full'>
         <div className='my-6 px-4 flex justify-between items-center'>
@@ -23,21 +42,15 @@ export default function Home() {
         </div>
 
         <div>
-            <CreatedInfoCard
-                name='Meras e Khizr Donations'
-                date='12th July, 2021'
-                active={true}
-            />
-             <CreatedInfoCard
-                name='Meras e Khizr Donations'
-                date='12th July, 2021'
-                active={true}
-            />
-             <CreatedInfoCard
-                name='Meras e Khizr Donations'
-                date='12th July, 2021'
-                active={true}
-            />
+        {
+            qrCodes.map((code, index) => (
+                <CreatedInfoCard
+                    name={code.title}
+                    date={formatSupabaseDate(code.createdat)}
+                    active={code.isactive}
+                />
+            ))
+        }
         </div>
         
     </div>
