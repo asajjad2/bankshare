@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import FeatherIcon from 'feather-icons-react';
+
+import { useParams } from 'react-router-dom';
+import { fetchQRCodeDetails } from '../../supabaseFunctions';
 
 const InfoCard = ({title, value, copy}) => {
 
@@ -22,34 +25,52 @@ const InfoCard = ({title, value, copy}) => {
     )
 }
 
-const data = [
-    {
-        title: 'Bank Name',
-        value: 'Meezan Bank'
-    },
-    {
-        title: 'Account Title',
-        value: 'Muhammad Munaf Ul Hassan'
-    },
-    {
-        title: 'Account Number',
-        value: '1324908712359807389',
-        copy: true
-    },
-    {
-        title: 'IBAN Number',
-        value: '1324908712359807389',
-        copy: true
-    },
-    {
-        title: 'Swift Code',
-        value: 'MEZNPKKA',
-        copy: true
+// const dummyData = {
+//     'Bank Name' : 'Meezan Bank',
+//     'Account Title' : 'Muhammad Munaf Ul Hassan',
+//     'Account Number' : '1324908712359807389',
+//     'IBAN Number' : '1324908712359807389',
+//     'Swift Code' : 'MEZNPKKA'
+// }
+
+const mapOntoData = (response) => {
+
+    const data = {
+        'Bank Name' : response.bankname,
+        'Account Title' : response.accounttitle,
+        'Account Number' : response.accountnumber,
+        'IBAN Number' : response.iban,
+        'Swift Code' : response.swift
     }
-]
+
+    return data;
+}
 
 export default function QRCodeDisplay() {
-  return (
+
+
+    const { id } = useParams();
+    const [qrCodeDetails, setQRCodeDetails] = useState({});
+
+    useEffect(() => {
+        const loadQRCodeDetails = async () => {
+            const details = await fetchQRCodeDetails(+id)
+            setQRCodeDetails(mapOntoData(details[0]))
+        }
+
+        if (id) {
+            loadQRCodeDetails()
+        }
+
+    }, [id]);
+
+
+    if(!qrCodeDetails) return (
+        <div className='w-full h-full flex justify-center items-center'>
+            <h1>Loading...</h1>
+        </div>
+    )
+    else return (
     <div className='w-full'>
         <div className='px-4 py-8 space-y-10'>
             <div className='space-y-4'>
@@ -61,9 +82,11 @@ export default function QRCodeDisplay() {
             </div>
             <div className='space-y-5'>
                 {
-                    data.map((item, index) => (
-                        <InfoCard key={index} title={item.title} value={item.value} copy={item.copy}/>
-                    ))
+                    qrCodeDetails && Object.keys(qrCodeDetails).map((key, index) => {
+                        return (
+                            <InfoCard key={index} title={key} value={qrCodeDetails[key]} copy={true}/>
+                        )
+                    })
                 }
             </div>
         </div>

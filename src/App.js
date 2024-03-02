@@ -15,9 +15,7 @@ import { Link } from 'react-router-dom';
 function App() {
 
   const { user } = useAuth();
-  console.log('User:', user)
-
-
+  
   return (
     <div className="App overflow-hidden font-raleway flex flex-col min-h-screen">
         <Link to={'/'} className='py-5 px-3 uppercase bg-blue-800 text-white text-center text-lg font-extrabold'>bankshare</Link>

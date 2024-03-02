@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input'
 
 import { insertQRCode } from '../../supabaseFunctions';
@@ -20,6 +21,7 @@ const initialQRData = {
 
 export default function CreateQRCode() {
 
+    const Navigate = useNavigate();
     const { user } = useAuth();
 
     initialQRData.p_user_id = user.id;
@@ -31,13 +33,14 @@ export default function CreateQRCode() {
             [e.target.name]: e.target.value
         });
 
-        console.log(qrCodeData);
+        // console.log(qrCodeData);
     }
 
     const handleCreateQRCode = async () => {
         try {
           const response = await insertQRCode(qrCodeData);
-          console.log('QR Code created:', response);
+        //   console.log('QR Code created:', response);
+          Navigate(`/qr-ready/${response}`)
         } catch (error) {
           console.error('Error creating QR Code:', error);
         }
