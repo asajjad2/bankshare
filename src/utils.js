@@ -19,12 +19,13 @@ export const formatSupabaseDate = (dateString) => {
     return `${getOrdinal(day)} ${monthNames[monthIndex]}, ${year}`;
 }
 
-export const generateQRCodeBlob = async (object) => {
-
-    const text = JSON.stringify(object);
+export const generateQRCodeBlob = async (id) => {
+    console.log(id)
+    const url = `https://bankshare.vercel.app/qr/${id}`;
 
     try {
-      const dataUrl = await QRCode.toDataURL(text, { width: 300, margin: 2 });
+      const dataUrl = await QRCode.toDataURL(url, { width: 300, margin: 2 });
+      return dataUrl;
       const response = await fetch(dataUrl);
       const blob = await response.blob();
       return blob;

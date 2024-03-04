@@ -23,6 +23,8 @@ const initialQRData = {
 
 export default function CreateQRCode() {
 
+    const [qrimage, setQrImage] = useState(null);
+
     const Navigate = useNavigate();
     const { user } = useAuth();
 
@@ -40,18 +42,25 @@ export default function CreateQRCode() {
 
     const handleCreateQRCode = async () => {
 
+        
+
         try {
           const response = await insertQRCode(qrCodeData);
-        //   console.log('QR Code created:', response);
-          Navigate(`/qr-ready/${response}`)
+          console.log('QR Code created:', response);
+          const image = await generateQRCodeBlob(response);
+          setQrImage(image);
+        //   Navigate(`/qr-ready/${response}`)
         } catch (error) {
           console.error('Error creating QR Code:', error);
         }
-      }
+    }
 
 
   return (
     <div className='py-6 px-4 space-y-6'>
+        {qrimage &&
+            <img src={qrimage} alt="qrcode" />
+        }
         <div>
             <h1 className='font-extrabold text-xl'>Create a QR Code</h1>
             <p className='text-gray-500 text-sm'>Add bank details to generate QR Code</p>
