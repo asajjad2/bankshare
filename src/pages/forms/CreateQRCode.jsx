@@ -6,6 +6,8 @@ import Input from '../../components/Input'
 import { insertQRCode } from '../../supabaseFunctions';
 import { useAuth } from '../../context/authContext';
 
+import { generateQRCodeBlob } from '../../utils';
+
 const initialQRData = {
     p_user_id: '', 
     p_title: "",
@@ -37,6 +39,7 @@ export default function CreateQRCode() {
     }
 
     const handleCreateQRCode = async () => {
+
         try {
           const response = await insertQRCode(qrCodeData);
         //   console.log('QR Code created:', response);

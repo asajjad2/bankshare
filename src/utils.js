@@ -1,3 +1,5 @@
+import QRCode from 'qrcode';
+
 export const formatSupabaseDate = (dateString) => {
     const monthNames = ["January", "February", "March", "April", "May", "June",
                         "July", "August", "September", "October", "November", "December"];
@@ -16,3 +18,17 @@ export const formatSupabaseDate = (dateString) => {
 
     return `${getOrdinal(day)} ${monthNames[monthIndex]}, ${year}`;
 }
+
+export const generateQRCodeBlob = async (object) => {
+
+    const text = JSON.stringify(object);
+
+    try {
+      const dataUrl = await QRCode.toDataURL(text, { width: 300, margin: 2 });
+      const response = await fetch(dataUrl);
+      const blob = await response.blob();
+      return blob;
+    } catch (error) {
+      console.error('Error generating QR code:', error);
+    }
+  }

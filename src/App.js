@@ -29,7 +29,7 @@ function App() {
           <Route path="/create" element={user ? <CreateQRCode /> : <Navigate to="/login" />} />
           <Route path="/edit/:id" element={user ? <EditQRCode /> : <Navigate to="/login" />} /> 
           <Route path="/qr-ready/:id" element={user ? <QRCodeReady /> : <Navigate to="/login" />} />
-          <Route path="/qr/:id" element={user ? <QRCodeDisplay /> : <Navigate to="/login" />} /> 
+          <Route path="/qr/:id" element={<QRCodeDisplay />}/> 
         </Routes>
     </div>
   );
