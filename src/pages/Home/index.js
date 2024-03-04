@@ -5,8 +5,8 @@ import { fetchActiveQRCodesByUser } from '../../supabaseFunctions'
 import { formatSupabaseDate } from '../../utils'
 import { useAuth } from '../../context/authContext'
 
-const CreatedInfoCard = ({name, date, active}) => (
-    <Link className='px-4 py-5 flex justify-between items-center border-b border-b-gray-500' to={'/edit/1'}>
+const CreatedInfoCard = ({name, date, active, id}) => (
+    <Link className='px-4 py-5 flex justify-between items-center border-b border-b-gray-500' to={`/edit/${id}`}>
         <div>
             <h3 className='font-extrabold '>{name}</h3>
             <p className='text-xs font-gray-500'>Created on {date}</p>
@@ -26,7 +26,6 @@ export default function Home() {
     useEffect(() => {
         const loadQRCodes = async () => {
             const codes = await fetchActiveQRCodesByUser(user.id)
-            console.log(codes)
             setQrCodes(codes)
         }
 
@@ -48,6 +47,7 @@ export default function Home() {
                     name={code.title}
                     date={formatSupabaseDate(code.createdat)}
                     active={code.isactive}
+                    id={code.qrcodeid}
                 />
             ))
         }

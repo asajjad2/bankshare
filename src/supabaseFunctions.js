@@ -52,3 +52,20 @@ export const fetchActiveQRCodesByUser = async (userId) => {
   }
 }
 
+export const updateQRCode = async (qrCodeId, updates) => {
+
+  try {
+    const { data, error } = await supabase
+      .from('qrcodes')
+      .update(updates)
+      .eq('qrcodeid', qrCodeId);
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
